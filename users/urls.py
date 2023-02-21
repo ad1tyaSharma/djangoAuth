@@ -8,7 +8,7 @@ urlpatterns =[
     path('login',loginView),
     path('register',registerView),
     path('profile',profileView),
-    path('forgotPass',forgotPassView),
-    path('resetPass/:id',resetPassView)
+    path('forgot-password',forgotPassView),
+    path('resetPass/<slug:id>/',resetPassView)
 
 ]

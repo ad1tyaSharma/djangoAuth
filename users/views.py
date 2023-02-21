@@ -9,5 +9,5 @@ def forgotPassView(request):
     return render(request,'users/forgotPass.html')
 def profileView(request):
     return render(request,'users/profile.html')
-def resetPassView(request):
+def resetPassView(request,id):
     return render(request,'users/resetPass.html')
