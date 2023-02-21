@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Reset Password | Webie</title>
+    <%- include('components/header.ejs') %>
+
+</head>
+<script>
+    const id = `<%=id%>`;
+    const token = `<%=token%>`
+    const resetPass = () => {
+
+        if (document.querySelector("#password-field").value !== document.querySelector("#conf-password-field")
+            .value) {
+            swal("Error", "Passwords don't match", 'error')
+            return;
+        }
+        axios.post(`/users/reset-password/${id}`, {
+                password: document.querySelector("#password-field").value
+            })
+            .then(function (response) {
+                if (response.status == 200) {
+                    window.location.href = '/users/login'
+                }
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    swal(error.response.data.error, "Please try again", 'error')
+                }
+            });
+    }
+</script>
+
+<body>
+    <%- include('components/navbar.ejs') %>
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-7 col-lg-5">
+                    <div class="wrap">
+                        <div class="img" style="background-image: url('/images/bg-1.jpg');"></div>
+                        <div class="login-wrap p-4 p-md-5">
+                            <div class="d-flex">
+                                <div class="w-100">
+                                    <h3 class="mb-4">Reset your Password</h3>
+                                </div>
+
+                            </div>
+                            <form action="#" class="signin-form">
+                                <div class="form-group">
+                                    <input id="password-field" type="password" class="form-control" required>
+                                    <label class="form-control-placeholder" for="password">Password</label>
+                                    <span id="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"
+                                        style="cursor:pointer;" onclick="myFunction()"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input id="conf-password-field" type="password" class="form-control" required>
+                                    <label class="form-control-placeholder" for="password">Confirm Password</label>
+                                    <span id="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"
+                                        style="cursor:pointer;" onclick="myFunction()"></span>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="form-control btn btn-primary rounded submit px-3"
+                                        onclick="resetPass()">Save Changes</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

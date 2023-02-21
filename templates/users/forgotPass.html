@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Forgot Password | Webie</title>
+    <meta charset="utf-8">
+    <%- include('components/header.ejs') %>
+
+</head>
+<script>
+    const generateLink = () => {
+        axios.post('/users/forgot-password', {
+                email: document.querySelector("#email").value
+            })
+            .then(function (response) {
+                if (response.status == 200) {
+                    //alert(response.data.msg);
+                    swal(response.data.msg, "One-time password reset link has been sent to your email address 😄", "success");
+                    //console.log(response.data.link);
+                    // window.location.href = '/posts'
+                }
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    swal(error.response.data.error, "Please try again!", "error");
+                }
+            });
+    }
+</script>
+
+<body>
+	<%- include('components/navbar.ejs') %>
+
+	</div>
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-7 col-lg-5">
+                    <div class="wrap">
+                        <div class="img" style="background-image: url('/images/bg-1.jpg');"></div>
+                        <div class="login-wrap p-4 p-md-5">
+                            <div class="d-flex">
+                                <div class="w-100">
+                                    <h3 class="mb-4">Enter email linked with your Webie Account</h3>
+                                </div>
+
+                            </div>
+                            <form action="#" class="signin-form">
+                                <div class="form-group mt-3">
+                                    <input type="email" id="email" class="form-control" required>
+                                    <label class="form-control-placeholder" for="email">Email</label>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="button" class="form-control btn btn-primary rounded submit px-3"
+                                        onclick="generateLink()">Send Reset link</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

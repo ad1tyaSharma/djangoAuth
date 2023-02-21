@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+   
+
+<script>
+    const user = JSON.parse(`<%- JSON.stringify(user)%>`)
+    const data = JSON.parse(`<%- JSON.stringify(data)%>`)
+        //console.log(cloudinary.preset);
+</script>
+<%- include('components/header.ejs') %>
+
+    <body>
+        <%- include('components/navbar.ejs') %>    
+                <section class="ftco-section">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-7 col-lg-5">
+                                <div class="wrap">
+                                    <div class="img" style="background-image: url('<%= data.profilePic%>');"></div>
+                                    <div class="login-wrap p-4 p-md-5">
+                                        <div class="d-flex">
+                                            <div class="w-100">
+                                                <h3 class="mb-4">Welcome <%= data.name%></h3>
+                                            </div>
+                                            
+                                        </div>
+                                        <form action="#" class="signin-form">
+                                            <div class="form-group mt-3">
+                                                <p>Email : <%= data.email%> </p>
+                                            </div>
+                                            <div class="form-group">
+                                                <p>Account Type : <%= data.role%></p>
+                                            </div>
+                                            <% if(data._id == user.id || user.role == 'admin'){ %>
+                                            <div class="form-group">
+                                                <button type="button" class="form-control btn btn-primary rounded px-3"
+                                                    ><a href="/users/edit/<%= data._id%>" style="color: #fff;">Edit</a></button>
+                                            </div>
+                                            <% } %>
+                                        </form>
+            
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <%- include('components/footer.ejs') %>
+
+    </body>
+
+</html>
