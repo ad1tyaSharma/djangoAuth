@@ -1,21 +1,23 @@
 from django.shortcuts import render,redirect
-from .forms import userForm
 # Create your views here.
 def loginView(request):
+    
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        print(email,password)
     return render(request,'users/login.html')
 def registerView(request):
     if request.method == 'POST':
-        form = userForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.likes = []
-            post.save()
-            return redirect('users/login')
-    else:
-        form = userForm()
-
-    return render(request,'users/register.html',{'form': form})
+        name= request.POST['name']
+        email = request.POST['email']
+        password = request.POST['password']
+        print(email,password,name)  
+    return render(request,'users/register.html')
 def forgotPassView(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        print(email) 
     return render(request,'users/forgotPass.html')
 def profileView(request):
     return render(request,'users/profile.html')

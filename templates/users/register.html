@@ -33,23 +33,23 @@
 								</div>
 
 							</div>
-							<form action="register" class="signin-form"> {% csrf_token %}
+							<form action="register" class="signin-form" method="POST"> {% csrf_token %}
 								<div class="form-group mt-3">
-									<input type="name" id="name" class="form-control" required>
+									<input type="name" id="name" name='name' class="form-control" required>
 									<label class="form-control-placeholder" for="Name">Name</label>
 								</div>
                                 <div class="form-group mt-3">
-									<input type="email" id="email" class="form-control" required>
+									<input type="email" id="email" name="email" class="form-control" required>
 									<label class="form-control-placeholder" for="email">Email</label>
 								</div>
 								<div class="form-group">
-									<input id="password-field" type="password" class="form-control" required>
+									<input id="password-field" name='password' type="password" class="form-control" required>
 									<label class="form-control-placeholder" for="password">Password</label>
 									<span id="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"
 										style="cursor:pointer;" onclick="myFunction()"></span>
 								</div>
 								<div class="form-group">
-									<button type="button" class="form-control btn btn-primary rounded submit px-3"
+									<button type="submit" class="form-control btn btn-primary rounded submit px-3"
 										>Register</button>
 								</div>
 								<div class="form-group d-md-flex">
