@@ -11,28 +11,7 @@ function myFunction() {
       y.classList.add("fa-eye")
     }
   }
-  const signInUser = () => {
-      //  e.preventDefault()
-      // console.log('clicked');
-      const data = {
-          //name: document.querySelector("#name").value,
-          email: document.querySelector("#email").value,
-          password: document.querySelector("#password-field").value,
-      }
-      axios.post('/users/login', data)
-          .then(function(response) {
-              if (response.status == 200) {
-                  
-                  window.location.href = '/posts'
-              }
-          })
-          .catch(function(error) {
-              if (error.response) {
-                  //alert(error.response.data.error);
-                  swal(error.response.data.error, "Please try again!", "error");
-              }
-          });
-  }
+ 
   const createUser = () => {
       //  e.preventDefault()
       // console.log('clicked');

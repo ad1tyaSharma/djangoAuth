@@ -5,8 +5,8 @@ from .views import profileView
 from .views import forgotPassView
 from .views import resetPassView
 urlpatterns =[
-    path('login',loginView),
-    path('register',registerView),
+    path('login',loginView,name='login'),
+    path('register',registerView,name='register'),
     path('profile',profileView),
     path('forgot-password',forgotPassView),
     path('resetPass/<slug:id>/',resetPassView)

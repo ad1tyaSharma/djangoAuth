@@ -45,13 +45,13 @@
                             <form action="" class="signin-form" method="POST">
                             {% csrf_token %}
                                 <div class="form-group">
-                                    <input id="password-field" type="password" class="form-control" required>
+                                    <input id="password-field" name='password-1' type="password" class="form-control" required>
                                     <label class="form-control-placeholder" for="password">Password</label>
                                     <span id="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"
                                         style="cursor:pointer;" onclick="myFunction()"></span>
                                 </div>
                                 <div class="form-group">
-                                    <input id="conf-password-field" type="password" class="form-control" required>
+                                    <input id="conf-password-field" name='password-2' type="password" class="form-control" required>
                                     <label class="form-control-placeholder" for="password">Confirm Password</label>
                                     <span id="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"
                                         style="cursor:pointer;" onclick="myFunction()"></span>
