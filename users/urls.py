@@ -9,6 +9,6 @@ urlpatterns =[
     path('register',registerView,name='register'),
     path('profile',profileView),
     path('forgot-password',forgotPassView),
-    path('resetPass/<slug:id>/',resetPassView)
+    path('resetPass/<str:id>/',resetPassView)
 
 ]
