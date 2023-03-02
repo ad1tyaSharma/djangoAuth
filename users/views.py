@@ -74,24 +74,62 @@ def forgotPassView(request):
         body = json.loads(body_unicode)
         email = body['email']
         if Blogger.objects.filter(email__exact=email):
-            blogger = Blogger.objects.filter(email__exact=email)
             payload = {
                     'email': email,
                     'exp': datetime.utcnow() + timedelta(minutes=5),
                 }
             token = jwt.encode(payload, os.environ.get('JWT_SECRET_KEY'), algorithm='HS256')
             send_mail('Password Reset Link', f"<div style='font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2'><div style='margin:50px auto;width:70%;padding:20px 0'><div style='border-bottom:1px solid #eee'><a href='{os.environ.get('HOST')}/' style='font-size:1.4em;color: #01D28E;text-decoration:none;font-weight:600'>Blog</a></div><p style='font-size:1.1em'>Hi,</p><p>We received a request to reset your password.Reset link is valid for 5 minutes</p><a href='{os.environ.get('HOST')}/users/resetPass/{token}' style='background: #01D28E; text-decoration: none;margin: 0 auto;width: max-content;padding: 10px 10px;color: #fff;border-radius: 4px;'>Reset Password</a><p style='font-size:0.9em;'>Regards,<br />Your Brand</p><hr style='border:none;border-top:1px solid #eee' /></div></div>", 'mail4trial4@gmail.com', [f'{email}'], fail_silently=False)
-            return redirect('login')
+            response = JsonResponse({'msg': 'Link Sent'},status=200)
+            return response
         else:
             response = JsonResponse({'error': 'User not found!!'},status=400)
             return response
-        print(email) 
     return render(request,'users/forgotPass.html')
 def profileView(request):
     return render(request,'users/profile.html')
+
+@csrf_exempt
 def resetPassView(request,id):
     if request.method == 'POST':
-        password1= request.POST['password-1']
-        password2 = request.POST['password-2']
-        print(password1,password2)
-    return render(request,'users/resetPass.html')
+        raw_data = request.body
+        body_unicode = raw_data.decode('utf-8')
+        body = json.loads(body_unicode)
+        password= body['password']
+        decoded_data = jwt.decode(id, os.environ.get('JWT_SECRET_KEY'), algorithms=['HS256'])
+        # Access the decoded data
+        email = decoded_data['email']
+        blogger = Blogger.objects.get(email__exact=email)
+        hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        blogger.password = hashed.decode('utf-8')
+        blogger.save()
+        response = JsonResponse({'msg':"Password Updated!"},status=200)
+        return response
+    elif request.method == 'GET':
+        try:
+            # Decode the JWT without verifying the signature
+            decoded_data = jwt.decode(id, os.environ.get('JWT_SECRET_KEY'), algorithms=['HS256'])
+
+            # Access the expiration time from the decoded data
+            expiration_time = datetime.fromtimestamp(decoded_data['exp'])
+
+            # Check if the token has expired
+            if expiration_time < datetime.utcnow():
+                # Handle expired token error
+                return redirect('login')
+
+            else:
+                # Token is valid
+                return render(request,'users/resetPass.html',{'id':id})
+
+        except jwt.DecodeError:
+            # Handle decoding error
+            return redirect('login')
+
+        except jwt.ExpiredSignatureError:
+            # Handle expired token error
+            return redirect('login')
+
+    
+
+   

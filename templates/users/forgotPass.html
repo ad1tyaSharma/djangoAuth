@@ -12,9 +12,10 @@
             .then(function (response) {
                 if (response.status == 200) {
                     //alert(response.data.msg);
-                    swal(response.data.msg, "One-time password reset link has been sent to your email address 😄", "success");
+                    //swal(response.data.msg, "One-time password reset link has been sent to your email address 😄", "success");
                     //console.log(response.data.link);
-                    // window.location.href = '/posts'
+                     window.location.href = 'login'
+                     return
                 }
             })
             .catch(function (error) {

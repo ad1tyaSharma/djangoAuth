@@ -11,6 +11,19 @@ function myFunction() {
       y.classList.add("fa-eye")
     }
   }
+  function myFunction2() {
+    var x = document.getElementById("conf-password-field");
+    var y = document.querySelector(".toggle-password-conf");
+    if (x.type === "password") {
+      x.type = "text";
+      y.classList.remove("fa-eye")
+      y.classList.add("fa-eye-slash")
+    } else {
+      x.type = "password";
+      y.classList.remove("fa-eye-slash")
+      y.classList.add("fa-eye")
+    }
+  }
   const signInUser = () => {
     //  e.preventDefault()
     // console.log('clicked');
