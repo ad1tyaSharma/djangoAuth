@@ -79,7 +79,7 @@ def forgotPassView(request):
                     'exp': datetime.utcnow() + timedelta(minutes=5),
                 }
             token = jwt.encode(payload, os.environ.get('JWT_SECRET_KEY'), algorithm='HS256')
-            send_mail('Password Reset Link', f"<div style='font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2'><div style='margin:50px auto;width:70%;padding:20px 0'><div style='border-bottom:1px solid #eee'><a href='{os.environ.get('HOST')}/' style='font-size:1.4em;color: #01D28E;text-decoration:none;font-weight:600'>Blog</a></div><p style='font-size:1.1em'>Hi,</p><p>We received a request to reset your password.Reset link is valid for 5 minutes</p><a href='{os.environ.get('HOST')}/users/resetPass/{token}' style='background: #01D28E; text-decoration: none;margin: 0 auto;width: max-content;padding: 10px 10px;color: #fff;border-radius: 4px;'>Reset Password</a><p style='font-size:0.9em;'>Regards,<br />Your Brand</p><hr style='border:none;border-top:1px solid #eee' /></div></div>", 'mail4trial4@gmail.com', [f'{email}'], fail_silently=False)
+            send_mail('Password Reset Link', f"<div style='font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2'><div style='margin:50px auto;width:70%;padding:20px 0'><div style='border-bottom:1px solid #eee'><a href='{os.environ.get('HOST')}/' style='font-size:1.4em;color: #01D28E;text-decoration:none;font-weight:600'>Webie</a></div><p style='font-size:1.1em'>Hi,</p><p>We received a request to reset your password.Reset link is valid for 5 minutes</p><a href='{os.environ.get('HOST')}/users/resetPass/{token}' style='background: #01D28E; text-decoration: none;margin: 0 auto;width: max-content;padding: 10px 10px;color: #fff;border-radius: 4px;'>Reset Password</a><p style='font-size:0.9em;'>Regards,<br />Your Brand</p><hr style='border:none;border-top:1px solid #eee' /></div></div>", 'mail4trial4@gmail.com', [f'{email}'], fail_silently=False)
             response = JsonResponse({'msg': 'Link Sent'},status=200)
             return response
         else:
@@ -130,6 +130,7 @@ def resetPassView(request,id):
             # Handle expired token error
             return redirect('login')
 
-    
+def not_found(request, exception):
+    return render(request, '404.html', status=404)    
 
    
